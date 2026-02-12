@@ -13,14 +13,17 @@ import { InvestmentResultsComponent } from './investment-results/investment-resu
   styleUrl: './app.scss',
 })
 export class AppComponent {
-  resultsData?: {
-    year: number;
-    interest: number;
-    valueEndOfYear: number;
-    annualInvestment: number;
-    totalInterest: number;
-    totalAmountInvested: number;
-  }[];
+  resultsData = signal<
+    | {
+        year: number;
+        interest: number;
+        valueEndOfYear: number;
+        annualInvestment: number;
+        totalInterest: number;
+        totalAmountInvested: number;
+      }[]
+    | undefined
+  >(undefined);
 
   onCalculateInvestmentResults(data: InvestmentInput) {
     const { initialInvestment, annualInvestment, expectedReturn, duration } = data;
@@ -42,6 +45,6 @@ export class AppComponent {
       });
     }
 
-    this.resultsData = annualData;
+    this.resultsData.set(annualData);
   }
 }
